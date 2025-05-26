@@ -28,6 +28,30 @@ Using this embedding method, you can embed drawio files with multiple pages as t
 
 Of course, it can also be used for purposes other than gitea.
 
+### gitea
+
+Download the latest binary version from release and store it in any folder.
+
+```
+$ cd /data/gitea/bin
+$ curl -sSL -o drawio-converter https://github.com/arika0093/drawio-converter-html/releases/latest/download/drawio-converter-linux-amd64
+$ chmod 777 drawio-converter
+```
+
+Add the following to `app.ini`.
+
+```ini
+[markup.drawio]
+ENABLED         = true
+FILE_EXTENSIONS = .drawio
+RENDER_COMMAND  = /data/gitea/bin/drawio-converter
+IS_INPUT_FILE   = false
+RENDER_CONTENT_MODE = no-sanitizer
+```
+
+Finally, the gitea server can be restarted to accommodate the drawing.
+
+
 ## Specifications
 drawio files are written in XML format.
 For example, the following simple drawio image is represented by this XML:
