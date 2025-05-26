@@ -4,9 +4,9 @@ drawioファイルをGitHub/GitLab/Gitea等に埋め込むためのHTML表現を
 [English version](README.md)
 
 ## ダウンロード
-* [Linux](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-linux-x64)
-* [macOS](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-macos-x64)
-* [Windows](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-windows-x64.exe)
+* [Linux](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-linux-amd64)
+* [macOS](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-macos-amd64)
+* [Windows](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-windows-amd64.exe)
 
 ## 使い方
 drawioファイルを引数に渡すと、そのまま表示できるHTMLを生成します。特に指定をしない場合、標準出力にそのまま出力します。

@@ -4,9 +4,9 @@ A tool to generate HTML representation of drawio files for embedding in GitHub/G
 [Japanese version](README_ja.md)
 
 ## Download
-* [Linux](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-linux-x64)
-* [macOS](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-macos-x64)
-* [Windows](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-windows-x64.exe)
+* [Linux](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-linux-amd64)
+* [macOS](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-macos-amd64)
+* [Windows](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-windows-amd64.exe)
 
 ## Usage
 Pass a drawio file as an argument to generate HTML that can be displayed as is. If no specific output is specified, it will be printed to standard output.
