@@ -14,11 +14,11 @@ drawioファイルを引数に渡すと、そのまま表示できるHTMLを生�
 ```
 drawio-converter [options] <drawio-file>
 
-	-d, --dark-mode       ダークモードで表示する
-	-o, --output <file>   出力先ファイルを指定 (省略時は標準出力)
-	-t, --toolbar <items> ツールバーに表示するアイテムをカンマ区切りで指定 (デフォルト: "pages,zoom,layers,tags")
-	--js <url>            外部JavaScriptファイルのURLを指定 (デフォルト: "https://viewer.diagrams.net/js/viewer-static.min.js")
-	                      空白を指定すると、JavaScriptタグの出力を抑制します。
+  -d, --dark-mode       ダークモードで表示する
+  -o, --output <file>   出力先ファイルを指定 (省略時は標準出力)
+  -t, --toolbar <items> ツールバーに表示するアイテムをカンマ区切りで指定 (デフォルト: "pages,zoom,layers,tags")
+  --js <url>            外部JavaScriptファイルのURLを指定 (デフォルト: "https://viewer.diagrams.net/js/viewer-static.min.js")
+                        空白を指定すると、JavaScriptタグの出力を抑制します。
 ```
 
 ## 主な用途
@@ -63,40 +63,40 @@ drawioファイルはXML形式で記述されています。
 ```jsx
 // 説明のためにJSX形式で記述しています。
 export default function DrawioExample() {
-	const xml = `
-	<mxfile>
-		<diagram id="dKW03aIZ6vnLPfy8lMd4" name="Page 1">
-			<mxGraphModel dx="618" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-				<root>
-					<mxCell id="0" />
-					<mxCell id="1" parent="0" />
-					<mxCell id="2" value="Hello, World" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-						<mxGeometry x="160" y="90" width="120" height="60" as="geometry" />
-					</mxCell>
-				</root>
-			</mxGraphModel>
-		</diagram>
-	</mxfile>
-	`;
+  const xml = `
+  <mxfile>
+    <diagram id="dKW03aIZ6vnLPfy8lMd4" name="Page 1">
+      <mxGraphModel dx="618" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <root>
+          <mxCell id="0" />
+          <mxCell id="1" parent="0" />
+          <mxCell id="2" value="Hello, World" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+            <mxGeometry x="160" y="90" width="120" height="60" as="geometry" />
+          </mxCell>
+        </root>
+      </mxGraphModel>
+    </diagram>
+  </mxfile>
+  `;
 
-	const drawio = {
-		"highlight":"#0000ff",
-		"lightbox":false,
-		"nav":true,
-		"resize":true,
-		"page":0,
-		"dark-mode":"auto",
-		"toolbar":"pages zoom layers tags lightbox",
-		"edit":"_blank",
-		"xml":xml
-	}
+  const drawio = {
+    "highlight":"#0000ff",
+    "lightbox":false,
+    "nav":true,
+    "resize":true,
+    "page":0,
+    "dark-mode":"auto",
+    "toolbar":"pages zoom layers tags lightbox",
+    "edit":"_blank",
+    "xml":xml
+  }
 
-	return (
-		<>
-			<div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph={drawio}></div>
-			<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
-		</>
-	);
+  return (
+    <>
+      <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph={drawio}></div>
+      <script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+    </>
+  );
 }
 ```
 要するに、XML+表示オプションがそのままHTMLの`data-mxgraph`属性に埋め込まれ、`viewer.diagrams.net/js/viewer-static.min.js`を読み込むことで表示されます。
