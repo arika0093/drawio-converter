@@ -160,3 +160,7 @@ export default function DrawioExample() {
 }
 ```
 In short, the XML and display options are embedded directly into the HTML `data-mxgraph` attribute, and loading `viewer.diagrams.net/js/viewer-static.min.js` enables the diagram display.
+
+## License
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](./LICENSE) file for details.
