@@ -1,7 +1,7 @@
 # drawio-html-converter
 Generates HTML representations for embedding drawio files in GitHub, GitLab, Gitea, etc.
 
-[日本語版](README.ja.md)
+[日本語版](README_ja.md)
 
 ## Background
 This tool was created to easily view drawio files managed on [gitea](https://gitea.io/).  
@@ -68,17 +68,17 @@ IS_INPUT_FILE   = false
 RENDER_CONTENT_MODE = no-sanitizer
 ```
 
-Finally, restart the gitea server to enable drawio file embedding.
+最後に、giteaサーバーを再起動するとdrawioファイルの埋め込み表示が有効になります。
 
-### Using the API
+### APIからの使用
 
-Start the API server. The quickest way is to use Docker.
+APIサーバーを立ち上げます。最も手っ取り早い方法は、dockerを使用することです。
 
 ```bash
 $ docker run -d --name drawio-converter --port 8080:8080 ghcr.io/arika0093/drawio-html-converter
 ```
 
-Then, add the following to your `app.ini`:
+次に、`app.ini` に以下を追加します。
 
 ```ini
 [markup.drawio]
@@ -89,9 +89,9 @@ IS_INPUT_FILE   = true
 RENDER_CONTENT_MODE = no-sanitizer
 ```
 
-## Specification
-drawio files are written in XML format.
-For example, the following simple drawio image is represented by this XML:
+## 仕様
+drawioファイルはXML形式で記述されています。
+例えば、以下の単純なdrawio画像はこのようなXMLで表現されます。
 
 ![Hello, World](./assets/sample.svg)
 
@@ -111,7 +111,7 @@ For example, the following simple drawio image is represented by this XML:
 </mxfile>
 ```
 
-When output as HTML, it looks like this:
+この画像をHTML形式で吐き出すと以下の形で出力されます。
 
 ```html
 <!-- draw.io diagram -->
@@ -119,10 +119,10 @@ When output as HTML, it looks like this:
 <script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
 ```
 
-Formatted for readability, it looks like this:
+読みにくいので整形すると、このようになります。
 
 ```jsx
-// Written in JSX for explanation purposes.
+// 説明のためにJSX形式で記述しています。
 export default function DrawioExample() {
   const xml = `
   <mxfile>
@@ -160,4 +160,5 @@ export default function DrawioExample() {
   );
 }
 ```
-In short, the XML and display options are embedded in the HTML `data-mxgraph` attribute, and loading `viewer.diagrams.net/js/viewer-static.min.js` enables rendering.
+要するに、XML+表示オプションがそのままHTMLの`data-mxgraph`属性に埋め込まれ、`viewer.diagrams.net/js/viewer-static.min.js`を読み込むことで表示されます。
+
