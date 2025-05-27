@@ -1,12 +1,12 @@
-# drawio-converter
+# drawio-html-converter
 drawioファイルをGitHub/GitLab/Gitea等に埋め込むためのHTML表現を生成します。
 
 [English version](README.md)
 
 ## ダウンロード
-* [Linux](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-linux-amd64)
-* [macOS](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-macos-amd64)
-* [Windows](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-windows-amd64.exe)
+* [Linux](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-linux-amd64)
+* [macOS](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-macos-amd64)
+* [Windows](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-windows-amd64.exe)
 
 ## 使い方
 drawioファイルを引数に渡すと、そのまま表示できるHTMLを生成します。特に指定をしない場合、標準出力にそのまま出力します。
@@ -27,6 +27,30 @@ drawio-converter [options] <drawio-file>
 この埋込み方法を使用すると、複数ページのdrawioファイルをそのまま埋め込むことができます。
 
 もちろん、gitea以外の用途でも使用可能です。
+
+### gitea
+リリースから最新のバイナリをダウンロードし、任意のフォルダに保存します。
+
+```
+$ mkdir -p /data/gitea/bin
+$ cd /data/gitea/bin
+$ curl -sSL -o drawio-converter https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-linux-amd64
+$ chmod 777 drawio-converter
+```
+
+`app.ini` に以下を追加します。
+
+```ini
+[markup.drawio]
+ENABLED         = true
+FILE_EXTENSIONS = .drawio
+RENDER_COMMAND  = /data/gitea/bin/drawio-converter
+IS_INPUT_FILE   = false
+RENDER_CONTENT_MODE = no-sanitizer
+```
+
+最後に、giteaサーバーを再起動するとdrawioファイルの埋め込み表示が有効になります。
+
 
 ## 仕様
 drawioファイルはXML形式で記述されています。

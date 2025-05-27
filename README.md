@@ -1,12 +1,12 @@
-# drawio-converter
+# drawio-html-converter
 A tool to generate HTML representation of drawio files for embedding in GitHub/GitLab/Gitea etc.
 
 [Japanese version](README_ja.md)
 
 ## Download
-* [Linux](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-linux-amd64)
-* [macOS](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-macos-amd64)
-* [Windows](https://github.com/arika0093/drawio-converter/releases/latest/download/drawio-converter-windows-amd64.exe)
+* [Linux](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-linux-amd64)
+* [macOS](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-macos-amd64)
+* [Windows](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-windows-amd64.exe)
 
 ## Usage
 Pass a drawio file as an argument to generate HTML that can be displayed as is. If no specific output is specified, it will be printed to standard output.
@@ -33,8 +33,9 @@ Of course, it can also be used for purposes other than gitea.
 Download the latest binary version from release and store it in any folder.
 
 ```
+$ mkdir -p /data/gitea/bin
 $ cd /data/gitea/bin
-$ curl -sSL -o drawio-converter https://github.com/arika0093/drawio-converter-html/releases/latest/download/drawio-converter-linux-amd64
+$ curl -sSL -o drawio-converter https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-linux-amd64
 $ chmod 777 drawio-converter
 ```
 
