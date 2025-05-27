@@ -22,11 +22,11 @@ drawio-converter [options] <drawio-file>
 ```
 
 ## Main Use Cases
-Originally created to embed drawio files managed on [gitea](https://gitea.io/).
-While management in `.drawio.svg` format is also possible, there was an issue where multiple page information would be lost.
-Using this embedding method, you can embed drawio files with multiple pages as they are.
-
-Of course, it can also be used for purposes other than gitea.
+Originally created to embed drawio files managed on [gitea](https://gitea.io/).  
+While management in `.drawio.svg` format is also possible, there was an issue where multiple page information would be lost.  
+Using this embedding method, you can embed drawio files with multiple pages as they are.  
+  
+Of course, it can also be used for purposes other than gitea.  
 
 ### gitea
 
