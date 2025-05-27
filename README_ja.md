@@ -3,10 +3,19 @@ drawioファイルをGitHub/GitLab/Gitea等に埋め込むためのHTML表現を
 
 [English version](README.md)
 
+## 背景
+[gitea](https://gitea.io/)上で管理しているdrawioファイルを手軽に閲覧するために作成しました。  
+`.drawio.svg`などの形でも管理は可能ですが、複数ページの場合その情報が失われてしまう課題がありました。  
+この埋込み方法を使用すると、複数ページのdrawioファイルをそのまま埋め込むことができます。  
+  
+もちろん、gitea以外の用途でも使用可能です。
+
 ## ダウンロード
 * [Linux](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-linux-amd64)
 * [macOS](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-macos-amd64)
 * [Windows](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-windows-amd64.exe)
+
+または、[ghcr.io](https://ghcr.io/arika0093/drawio-html-converter)のDockerイメージを使用することもできます。
 
 ## 使い方
 drawioファイルを引数に渡すと、そのまま表示できるHTMLを生成します。特に指定をしない場合、標準出力にそのまま出力します。
@@ -19,16 +28,26 @@ drawio-converter [options] <drawio-file>
   -t, --toolbar <items> ツールバーに表示するアイテムをカンマ区切りで指定 (デフォルト: "pages,zoom,layers,tags")
   --js <url>            外部JavaScriptファイルのURLを指定 (デフォルト: "https://viewer.diagrams.net/js/viewer-static.min.js")
                         空白を指定すると、JavaScriptタグの出力を抑制します。
+
+  Server options:
+  --server              APIサーバーモードで起動
+  --port <port>         使用するポートを指定 (デフォルト: 8080)
 ```
 
-## 主な用途
-[gitea](https://gitea.io/)上で管理しているdrawioファイルを手軽に閲覧するために作成しました。  
-`.drawio.svg`などの形でも管理は可能ですが、複数ページの場合その情報が失われてしまう課題がありました。  
-この埋込み方法を使用すると、複数ページのdrawioファイルをそのまま埋め込むことができます。  
-  
-もちろん、gitea以外の用途でも使用可能です。
+### APIサーバーモード
 
-### gitea
+`--server`オプションを指定すると、APIサーバーモードで起動します。このモードでは、HTTPリクエストを受け付けてdrawioファイルをHTMLに変換します。
+
+### GET
+`GET /convert?fileUri=<URL>`
+このエンドポイントは、クエリパラメータ`fileUri`で指定されたURLからdrawioファイルを取得し、HTMLに変換します。
+
+### POST
+`POST /convert`
+このエンドポイントは、リクエストボディに含まれるdrawioファイルの内容をHTMLに変換します。
+
+## giteaでの使用方法
+### CLIでの使用
 リリースから最新のバイナリをダウンロードし、任意のフォルダに保存します。
 
 ```
@@ -51,6 +70,24 @@ RENDER_CONTENT_MODE = no-sanitizer
 
 最後に、giteaサーバーを再起動するとdrawioファイルの埋め込み表示が有効になります。
 
+### APIからの使用
+
+APIサーバーを立ち上げます。最も手っ取り早い方法は、dockerを使用することです。
+
+```bash
+$ docker run -d --name drawio-converter --port 8080:8080 ghcr.io/arika0093/drawio-html-converter
+```
+
+次に、`app.ini` に以下を追加します。
+
+```ini
+[markup.drawio]
+ENABLED         = true
+FILE_EXTENSIONS = .drawio
+RENDER_COMMAND  = curl -sSL -X POST -d @- http://localhost:8080/convert
+IS_INPUT_FILE   = false
+RENDER_CONTENT_MODE = no-sanitizer
+```
 
 ## 仕様
 drawioファイルはXML形式で記述されています。

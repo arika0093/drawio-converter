@@ -1,36 +1,54 @@
 # drawio-html-converter
-A tool to generate HTML representation of drawio files for embedding in GitHub/GitLab/Gitea etc.
+Generates HTML representations for embedding drawio files in GitHub, GitLab, Gitea, etc.
 
-[Japanese version](README_ja.md)
+[日本語版](README.ja.md)
+
+## Background
+This tool was created to easily view drawio files managed on [gitea](https://gitea.io/).  
+While you can manage files as `.drawio.svg`, information is lost for multi-page diagrams.  
+With this embedding method, you can embed multi-page drawio files as-is.  
+
+Of course, it can also be used outside of gitea.
 
 ## Download
 * [Linux](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-linux-amd64)
 * [macOS](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-macos-amd64)
 * [Windows](https://github.com/arika0093/drawio-html-converter/releases/latest/download/drawio-converter-windows-amd64.exe)
 
+Alternatively, you can use the Docker image from [ghcr.io](https://ghcr.io/arika0093/drawio-html-converter).
+
 ## Usage
-Pass a drawio file as an argument to generate HTML that can be displayed as is. If no specific output is specified, it will be printed to standard output.
+Pass a drawio file as an argument to generate HTML that can be displayed as-is. By default, the output is sent to standard output.
 
 ```
 drawio-converter [options] <drawio-file>
 
   -d, --dark-mode       Display in dark mode
-  -o, --output <file>   Specify output file (default is standard output)
-  -t, --toolbar <items> Specify toolbar items to display as comma-separated (default: "pages,zoom,layers,tags")
+  -o, --output <file>   Specify output file (default: stdout)
+  -t, --toolbar <items> Specify toolbar items as comma-separated list (default: "pages,zoom,layers,tags")
   --js <url>            Specify external JavaScript file URL (default: "https://viewer.diagrams.net/js/viewer-static.min.js")
                         Specify blank to suppress JavaScript tag output.
+
+  Server options:
+  --server              Start in API server mode
+  --port <port>         Specify port to use (default: 8080)
 ```
 
-## Main Use Cases
-Originally created to embed drawio files managed on [gitea](https://gitea.io/).  
-While management in `.drawio.svg` format is also possible, there was an issue where multiple page information would be lost.  
-Using this embedding method, you can embed drawio files with multiple pages as they are.  
-  
-Of course, it can also be used for purposes other than gitea.  
+### API Server Mode
 
-### gitea
+Specify the `--server` option to start in API server mode. In this mode, HTTP requests are accepted and drawio files are converted to HTML.
 
-Download the latest binary version from release and store it in any folder.
+### GET
+`GET /convert?fileUri=<URL>`
+This endpoint fetches the drawio file from the URL specified in the `fileUri` query parameter and converts it to HTML.
+
+### POST
+`POST /convert`
+This endpoint converts the drawio file content included in the request body to HTML.
+
+## Usage with gitea
+### Using the CLI
+Download the latest binary from the releases page and save it to any folder.
 
 ```
 $ mkdir -p /data/gitea/bin
@@ -39,7 +57,7 @@ $ curl -sSL -o drawio-converter https://github.com/arika0093/drawio-html-convert
 $ chmod 777 drawio-converter
 ```
 
-Add the following to `app.ini`.
+Add the following to your `app.ini`:
 
 ```ini
 [markup.drawio]
@@ -50,10 +68,28 @@ IS_INPUT_FILE   = false
 RENDER_CONTENT_MODE = no-sanitizer
 ```
 
-Finally, the gitea server can be restarted to accommodate the drawing.
+Finally, restart the gitea server to enable drawio file embedding.
 
+### Using the API
 
-## Specifications
+Start the API server. The quickest way is to use Docker.
+
+```bash
+$ docker run -d --name drawio-converter --port 8080:8080 ghcr.io/arika0093/drawio-html-converter
+```
+
+Then, add the following to your `app.ini`:
+
+```ini
+[markup.drawio]
+ENABLED         = true
+FILE_EXTENSIONS = .drawio
+RENDER_COMMAND  = curl -sSL -X POST -d @- http://localhost:8080/convert
+IS_INPUT_FILE   = true
+RENDER_CONTENT_MODE = no-sanitizer
+```
+
+## Specification
 drawio files are written in XML format.
 For example, the following simple drawio image is represented by this XML:
 
@@ -75,7 +111,7 @@ For example, the following simple drawio image is represented by this XML:
 </mxfile>
 ```
 
-When this image is output in HTML format, it will look like this:
+When output as HTML, it looks like this:
 
 ```html
 <!-- draw.io diagram -->
@@ -83,10 +119,10 @@ When this image is output in HTML format, it will look like this:
 <script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
 ```
 
-If we format it for readability, it looks like this:
+Formatted for readability, it looks like this:
 
 ```jsx
-// Written in JSX format for explanation
+// Written in JSX for explanation purposes.
 export default function DrawioExample() {
   const xml = `
   <mxfile>
@@ -124,5 +160,4 @@ export default function DrawioExample() {
   );
 }
 ```
-
-In other words, the XML + display options are embedded directly in the `data-mxgraph` attribute of the HTML, and it is displayed by loading `viewer.diagrams.net/js/viewer-static.min.js`.
+In short, the XML and display options are embedded in the HTML `data-mxgraph` attribute, and loading `viewer.diagrams.net/js/viewer-static.min.js` enables rendering.
