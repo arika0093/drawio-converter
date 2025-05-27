@@ -141,6 +141,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          # (repo-name):latest and (repo-name):(tag)
           tags: |
-            ${{ github.repository }}:${{ github.event.release.tag_name }}
-            ${{ github.repository }}:latest
+            drawio-html-converter:${{ github.ref_name }}
+            drawio-html-converter:latest
