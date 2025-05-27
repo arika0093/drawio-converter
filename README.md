@@ -125,37 +125,37 @@ For readability, here is a formatted example:
 export default function DrawioExample() {
   const xml = `
   <mxfile>
-  <diagram id="dKW03aIZ6vnLPfy8lMd4" name="Page 1">
-    <mxGraphModel dx="618" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-    <root>
-      <mxCell id="0" />
-      <mxCell id="1" parent="0" />
-      <mxCell id="2" value="Hello, World" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-      <mxGeometry x="160" y="90" width="120" height="60" as="geometry" />
-      </mxCell>
-    </root>
-    </mxGraphModel>
-  </diagram>
+    <diagram id="dKW03aIZ6vnLPfy8lMd4" name="Page 1">
+      <mxGraphModel dx="618" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="Hello, World" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxGeometry x="160" y="90" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+      </mxGraphModel>
+    </diagram>
   </mxfile>
   `;
 
   const drawio = {
-  "highlight":"#0000ff",
-  "lightbox":false,
-  "nav":true,
-  "resize":true,
-  "page":0,
-  "dark-mode":"auto",
-  "toolbar":"pages zoom layers tags lightbox",
-  "edit":"_blank",
-  "xml":xml
+    "highlight":"#0000ff",
+    "lightbox":false,
+    "nav":true,
+    "resize":true,
+    "page":0,
+    "dark-mode":"auto",
+    "toolbar":"pages zoom layers tags lightbox",
+    "edit":"_blank",
+    "xml":xml
   }
 
   return (
-  <>
-    <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph={drawio}></div>
-    <script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
-  </>
+    <>
+      <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph={drawio}></div>
+      <script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+    </>
   );
 }
 ```
