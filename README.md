@@ -67,18 +67,17 @@ RENDER_COMMAND  = /data/gitea/bin/drawio-converter
 IS_INPUT_FILE   = false
 RENDER_CONTENT_MODE = no-sanitizer
 ```
+Finally, after restarting the gitea server, embedded display of drawio files will be enabled.
 
-最後に、giteaサーバーを再起動するとdrawioファイルの埋め込み表示が有効になります。
+### Using the API
 
-### APIからの使用
-
-APIサーバーを立ち上げます。最も手っ取り早い方法は、dockerを使用することです。
+Start the API server. The quickest way is to use Docker:
 
 ```bash
 $ docker run -d --name drawio-converter --port 8080:8080 ghcr.io/arika0093/drawio-html-converter
 ```
 
-次に、`app.ini` に以下を追加します。
+Next, add the following to your `app.ini`:
 
 ```ini
 [markup.drawio]
@@ -89,29 +88,29 @@ IS_INPUT_FILE   = true
 RENDER_CONTENT_MODE = no-sanitizer
 ```
 
-## 仕様
-drawioファイルはXML形式で記述されています。
-例えば、以下の単純なdrawio画像はこのようなXMLで表現されます。
+## Specification
+drawio files are written in XML format.
+For example, a simple drawio diagram is represented by the following XML:
 
 ![Hello, World](./assets/sample.svg)
 
 ```xml
 <mxfile host="65bd71144e">
-    <diagram id="dKW03aIZ6vnLPfy8lMd4" name="Page 1">
-        <mxGraphModel dx="1723" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-            <root>
-                <mxCell id="0"/>
-                <mxCell id="1" parent="0"/>
-                <mxCell id="2" value="Hello, World" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="160" y="90" width="120" height="60" as="geometry"/>
-                </mxCell>
-            </root>
-        </mxGraphModel>
-    </diagram>
+  <diagram id="dKW03aIZ6vnLPfy8lMd4" name="Page 1">
+    <mxGraphModel dx="1723" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="2" value="Hello, World" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="90" width="120" height="60" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
 </mxfile>
 ```
 
-この画像をHTML形式で吐き出すと以下の形で出力されます。
+When this diagram is output in HTML format, it looks like this:
 
 ```html
 <!-- draw.io diagram -->
@@ -119,46 +118,45 @@ drawioファイルはXML形式で記述されています。
 <script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
 ```
 
-読みにくいので整形すると、このようになります。
+For readability, here is a formatted example:
 
 ```jsx
-// 説明のためにJSX形式で記述しています。
+// Written in JSX format for explanation purposes.
 export default function DrawioExample() {
   const xml = `
   <mxfile>
-    <diagram id="dKW03aIZ6vnLPfy8lMd4" name="Page 1">
-      <mxGraphModel dx="618" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
-        <root>
-          <mxCell id="0" />
-          <mxCell id="1" parent="0" />
-          <mxCell id="2" value="Hello, World" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-            <mxGeometry x="160" y="90" width="120" height="60" as="geometry" />
-          </mxCell>
-        </root>
-      </mxGraphModel>
-    </diagram>
+  <diagram id="dKW03aIZ6vnLPfy8lMd4" name="Page 1">
+    <mxGraphModel dx="618" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <root>
+      <mxCell id="0" />
+      <mxCell id="1" parent="0" />
+      <mxCell id="2" value="Hello, World" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+      <mxGeometry x="160" y="90" width="120" height="60" as="geometry" />
+      </mxCell>
+    </root>
+    </mxGraphModel>
+  </diagram>
   </mxfile>
   `;
 
   const drawio = {
-    "highlight":"#0000ff",
-    "lightbox":false,
-    "nav":true,
-    "resize":true,
-    "page":0,
-    "dark-mode":"auto",
-    "toolbar":"pages zoom layers tags lightbox",
-    "edit":"_blank",
-    "xml":xml
+  "highlight":"#0000ff",
+  "lightbox":false,
+  "nav":true,
+  "resize":true,
+  "page":0,
+  "dark-mode":"auto",
+  "toolbar":"pages zoom layers tags lightbox",
+  "edit":"_blank",
+  "xml":xml
   }
 
   return (
-    <>
-      <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph={drawio}></div>
-      <script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
-    </>
+  <>
+    <div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph={drawio}></div>
+    <script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+  </>
   );
 }
 ```
-要するに、XML+表示オプションがそのままHTMLの`data-mxgraph`属性に埋め込まれ、`viewer.diagrams.net/js/viewer-static.min.js`を読み込むことで表示されます。
-
+In short, the XML and display options are embedded directly into the HTML `data-mxgraph` attribute, and loading `viewer.diagrams.net/js/viewer-static.min.js` enables the diagram display.
