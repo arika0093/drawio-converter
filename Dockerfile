@@ -1,11 +1,11 @@
 # Use an official lightweight image as a parent image for building
-FROM golang:1.20-alpine AS builder
+FROM golang:1.24-alpine AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy the Go module files and download dependencies
-COPY go.mod go.sum ./
+COPY go.mod ./
 RUN go mod download
 
 # Copy the rest of the application code
